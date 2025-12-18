@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Loan Approval System</title>
+<style>
+body { font-family: Arial; background:#f4f6f9; }
+.container {
+    width:480px; margin:40px auto; background:#fff;
+    padding:25px; border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+h2 { text-align:center; color:#0a3d62; }
+label { display:block; margin-top:10px; }
+input, select, button {
+    width:100%; padding:8px; margin-top:5px;
+}
+button {
+    background:#0a3d62; color:#fff; border:none; cursor:pointer;
+}
+button:hover { background:#063052; }
+.result { text-align:center; margin-top:15px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Smart Loan Approval</h2>
+
+<form method="post">
+<label>Gender</label>
+<select name="Gender"><option value="1">Male</option><option value="0">Female</option></select>
+
+<label>Married</label>
+<select name="Married"><option value="1">Yes</option><option value="0">No</option></select>
+
+<label>Dependents</label>
+<select name="Dependents">
+<option value="0">0</option><option value="1">1</option>
+<option value="2">2</option><option value="3">3+</option>
+</select>
+
+<label>Education</label>
+<select name="Education"><option value="1">Graduate</option><option value="0">Not Graduate</option></select>
+
+<label>Self Employed</label>
+<select name="Self_Employed"><option value="1">Yes</option><option value="0">No</option></select>
+
+<label>Applicant Income</label>
+<input name="ApplicantIncome" required>
+
+<label>Coapplicant Income</label>
+<input name="CoapplicantIncome" required>
+
+<label>Loan Amount</label>
+<input name="LoanAmount" required>
+
+<label>Loan Term</label>
+<input name="Loan_Amount_Term" value="360" required>
+
+<label>Credit History</label>
+<select name="Credit_History"><option value="1">Good</option><option value="0">Bad</option></select>
+
+<label>Property Area</label>
+<select name="Property_Area">
+<option value="2">Urban</option><option value="1">Semiurban</option><option value="0">Rural</option>
+</select>
+
+<button type="submit">Predict</button>
+<button type="button" onclick="fillSample()">🎯 Try Sample Customer</button>
+</form>
+
+{% if prediction %}
+<div class="result">
+<p>{{ prediction }}</p>
+<p>Approval Probability: {{ probability }}%</p>
+<h4>Top Decision Factors:</h4>
+<ul>
+{% for f, v in explanation %}
+<li>{{ f }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+</div>
+
+<script>
+function fillSample() {
+document.querySelector('[name="Gender"]').value=1;
+document.querySelector('[name="Married"]').value=1;
+document.querySelector('[name="Dependents"]').value=1;
+document.querySelector('[name="Education"]').value=1;
+document.querySelector('[name="Self_Employed"]').value=0;
+document.querySelector('[name="ApplicantIncome"]').value=5000;
+document.querySelector('[name="CoapplicantIncome"]').value=2000;
+document.querySelector('[name="LoanAmount"]').value=150;
+document.querySelector('[name="Loan_Amount_Term"]').value=360;
+document.querySelector('[name="Credit_History"]').value=1;
+document.querySelector('[name="Property_Area"]').value=2;
+}
+</script>
+
+</body>
+</html>
